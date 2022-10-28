@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-
+. ./funcs.sh
 flag=$1
 second_flag=$2
 SRCS="get_next_line.c get_next_line.h get_next_line_utils.c"
@@ -37,40 +37,19 @@ compile () {
 	rm $RES temp.o
 }
 
-in_list () {
-	LIST=$1
-	TOFIND=$2
-	for name in $(echo $LIST | tr '\n' ' ')
-	do
-		if [ $name = $TOFIND ]
-		then
-			return 0
-			echo $TOFIND
-		fi
-	done
-	return 1
-}
 
-check_repo () {
-	for name in $SRCS
-	do
-		if ! in_list "$(ls $LOCALPATH)" $name
-		then
-			return 1
-		fi
-	done
-	return 0
-}
 
 if [ -z $flag ]
 
 then
 	echo "no params"
-	if ! check_repo
+	if ! check_repo "$SRCS" $LOCALPATH
 	then
 		echo "bad repo"
+		exit 1
 	fi
-
+	echo your repo seems to be good
+	compile ""
 
 
 elif [ $flag == n ] || [ $flag == "norm" ]
