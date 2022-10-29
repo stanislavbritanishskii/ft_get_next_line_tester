@@ -46,3 +46,5 @@ check_repo () {
 	fi
 	return 0
 }
+
+check_
